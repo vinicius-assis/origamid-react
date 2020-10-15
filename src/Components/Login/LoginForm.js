@@ -1,55 +1,46 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { TOKEN_POST, USER_GET } from '../../api';
 import useForm from '../../Hooks/useForm';
+import { UserContext } from '../../UserContext';
 import ButtonForm from '../ButtonForm';
+import Error from '../Helpers/Error';
 import InputForm from '../InputForm';
+
+import styles from './LoginForm.module.css'
+import stylesBtn from '../ButtonForm/ButtonForm.module.css'
+
 
 
 const LoginForm = () => {
   const username = useForm()
   const password = useForm()
 
-  useEffect(() => {
-    const token = window.localStorage.getItem('token')
-    if (token) {
-      getUser(token)
-    }
-  })
-
-  async function getUser(token) {
-    const {url, options} = USER_GET(token)
-    const response = await fetch(url, options)
-    const json = await response.json()
-    console.log(json)
-  }
-  
+  const { userLogin, error, loading } = useContext(UserContext) 
 
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (username.validate() && password.validate()) {
-      const {url, options} = TOKEN_POST({username: username.value, password: password.value})
-
-      const response = await fetch(url, options)
-      const json = await response.json()
-
-      window.localStorage.setItem('token', json.token)
-      getUser(json.token)
+    if (username.validate() && password.validate()) { 
+      userLogin(username.value, password.value)
     }
 
   }
 
   return (
-    <section>
-      <h1>Login</h1>
-      <form action="" onSubmit={handleSubmit}>
+    <section className="animeLeft">
+      <h1 className="title">Login</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <InputForm label="Usuario" type="text" name="username" {...username}/>
         <InputForm label="Password" type="password" name="password" {...password}/>
-        <ButtonForm>Entrar</ButtonForm>
+        {loading ? (<ButtonForm disabled>Carregando...</ButtonForm>) : (<ButtonForm>Entrar</ButtonForm>)}
+        <Error error={error} />
       </form>
-      <Link to="/login/criar">Cadastro</Link>
+      <Link className={styles.perdeu} to="/login/perdeu">Perdeu a senha?</Link>
+      <div className={styles.cadastro}>
+        <h2 className={styles.subtitle}>Cadastre-se</h2>
+        <p>Ainda nao possui conta? Cadastre-se no site.</p>
+        <Link className={stylesBtn.button} to="/login/criar">Cadastro</Link>
+      </div>
     </section>
   )
 }
