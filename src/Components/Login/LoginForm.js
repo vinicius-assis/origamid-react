@@ -35,7 +35,7 @@ const LoginForm = () => {
         <InputForm label="Usuario" type="text" name="username" {...username}/>
         <InputForm label="Password" type="password" name="password" {...password}/>
         {loading ? (<ButtonForm disabled>Carregando...</ButtonForm>) : (<ButtonForm>Entrar</ButtonForm>)}
-        <Error error={error} />
+        <Error error={error && 'Dados incorretos'} />
       </form>
       <Link className={styles.perdeu} to="/login/perdeu">Perdeu a senha?</Link>
       <div className={styles.cadastro}>
