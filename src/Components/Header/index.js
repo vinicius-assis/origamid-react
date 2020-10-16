@@ -6,7 +6,7 @@ import { UserContext } from '../../UserContext';
 
 
 const Header = () => {
-  const { userLogout, data } = useContext(UserContext)
+  const { data } = useContext(UserContext)
   
   return (
     <header className={styles.header}>
