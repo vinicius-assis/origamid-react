@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './FeedPhotoItem.module.css'
+import styles from './FeedPhotosItem.module.css'
 
 
 const FeedPhotosItem = ({photo, setModalPhoto }) => {
