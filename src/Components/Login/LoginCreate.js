@@ -10,9 +10,8 @@ import Error from '../Helpers/Error'
 
 const LoginCreate = () => {
   const username = userForm()
-  const email = userForm()
+  const email = userForm('email')
   const password = userForm()
-
   const { userLogin } = useContext(UserContext)
   const {loading, error, request } = useFetch()
 
