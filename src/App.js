@@ -10,6 +10,7 @@ import Footer from './Components/Footer';
 import { UserStorage } from './UserContext';
 import User from './Components/User/User';
 import ProtectedRouter from './Components/Helpers/ProtectedRouter';
+import Photo from './Components/Photo/Photo';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="login/*" element={<Login />} />
             <ProtectedRouter path="conta/*" element={<User />} />
+            <Route path="foto/:id" element={<Photo />} />
           </Routes>
           <Footer />
         </UserStorage>
